@@ -27,7 +27,11 @@ class EditFishForm extends React.Component {
 					type="text"
 					name="price"
 					onChange={this.handleChange}
-					value={formatPrice(this.props.fish.price)}
+					value={
+						Number.parseFloat(this.props.fish.price)
+							? formatPrice(this.props.fish.price)
+							: this.props.fish.price
+					}
 				/>
 				<select
 					type="text"
