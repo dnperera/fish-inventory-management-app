@@ -46,14 +46,22 @@ class App extends React.Component {
 	};
 
 	updateFish = (key, updatedFish) => {
-		console.log('Key -->', key);
-		console.log(updatedFish);
 		//take a current copy of the fishes state
 		const fishes = { ...this.state.fishes };
 		//take the eddited fish and update with new values
 		fishes[key] = updatedFish;
 		//then set the State
 		//this.setState({fishes:fishes});
+		this.setState({ fishes });
+	};
+
+	deleteFish = key => {
+		//take a current copy of the fishes state
+		const fishes = { ...this.state.fishes };
+		//delete the selected fish from fishes and also from firebase
+		//delete fishes[key]; - this will not update firebase
+		fishes[key] = null; // this way firebase also remove the selected fish
+		//update the state
 		this.setState({ fishes });
 	};
 
@@ -93,6 +101,7 @@ class App extends React.Component {
 					fishes={this.state.fishes}
 					addFish={this.addFish}
 					updateFish={this.updateFish}
+					deleteFish={this.deleteFish}
 					loadInventory={this.loadInventory}
 				/>
 			</div>
