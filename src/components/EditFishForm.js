@@ -1,5 +1,4 @@
 import React from 'react';
-import { formatPrice } from '../helpers.js';
 
 class EditFishForm extends React.Component {
 	handleChange = event => {
@@ -27,11 +26,7 @@ class EditFishForm extends React.Component {
 					type="text"
 					name="price"
 					onChange={this.handleChange}
-					value={
-						Number.parseFloat(this.props.fish.price)
-							? formatPrice(this.props.fish.price)
-							: this.props.fish.price
-					}
+					value={this.props.fish.price}
 				/>
 				<select
 					type="text"

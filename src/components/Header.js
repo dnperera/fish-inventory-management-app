@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Header = ({tagline}) => ( // Stateless Functional Component
+const Header = (
+	{ tagline } // Stateless Functional Component
+) => (
 	<header className="top">
 		<h1>
 			Catch
@@ -11,9 +14,14 @@ const Header = ({tagline}) => ( // Stateless Functional Component
 			Day
 		</h1>
 		<h3 className="tagline">
-			<span>{ tagline }</span>
+			<span>{tagline}</span>
 		</h3>
 	</header>
 );
+
+//Define Type of Prof component expect.
+Header.propTypes = {
+	tagline: PropTypes.string.isRequired,
+};
 
 export default Header;
