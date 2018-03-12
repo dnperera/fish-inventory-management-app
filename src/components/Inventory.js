@@ -18,7 +18,13 @@ class Inventory extends React.Component {
 		uid: null,
 		owener: null,
 	};
-
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.authHandler({ user });
+			}
+		});
+	}
 	authHandler = async authData => {
 		//lookup the current store in the firebase db
 		const store = await base.fetch(this.props.storeID, { context: this });
@@ -45,20 +51,35 @@ class Inventory extends React.Component {
 			.signInWithPopup(authProvider)
 			.then(this.authHandler);
 	};
+	logout = async () => {
+		console.log('Loging you out...');
+		//log out the user from FireBase
+		await firebase.auth().signOut();
+		//clear current state of the user
+		this.setState({ uid: null });
+	};
 	render() {
+		//define log out buttton
+		const logout = <button onClick={this.logout}>Log Out!</button>;
 		//check if the user logged in
 		if (!this.state.uid) {
 			return <Login authenticate={this.authenticate} />;
 		}
 		//check the current loged user  own the store
 		if (this.state.uid !== this.state.owener) {
-			<div>
-				<p>Sorry. you are not the owener!.</p>
-			</div>;
+			return (
+				<div>
+					<p>Sorry. you are not the owener!.</p>
+					{logout}
+				</div>
+			);
 		}
+
+		//Render the inventory once user authenticated
 		return (
 			<div className="inventory">
 				<h3>Inventory!!!</h3>
+				{logout}
 				{Object.keys(this.props.fishes).map(key => {
 					return (
 						<EditFishForm
